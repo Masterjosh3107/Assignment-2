@@ -5,6 +5,8 @@
 
 public class AVLTree<dataType extends Comparable<? super dataType>> extends BinaryTree<dataType>
 {
+   public int opCount = 0;
+   public int opCount2 = 0;
    public int height ( BinaryTreeNode<dataType> node )
    {
       if (node != null)
@@ -62,6 +64,7 @@ public class AVLTree<dataType extends Comparable<? super dataType>> extends Bina
 
    public void insert ( dataType d )
    {
+      opCount2++;
       root = insert (d, root);
    }
    public BinaryTreeNode<dataType> insert ( dataType d, BinaryTreeNode<dataType> node )
@@ -118,6 +121,7 @@ public class AVLTree<dataType extends Comparable<? super dataType>> extends Bina
 
    public BinaryTreeNode<dataType> find ( dataType d )
    {
+      opCount++;
       if (root == null)
          return null;
       else
@@ -148,5 +152,6 @@ public class AVLTree<dataType extends Comparable<? super dataType>> extends Bina
          treeOrder (node.right, level+1);
       }
    }
+
 }
 
