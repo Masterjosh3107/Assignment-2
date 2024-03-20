@@ -1,18 +1,62 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.*;
+import javax.swing.*;
 
 public class GenericsKbAVLApp {
     private AVLTree<Entry> tree = new AVLTree<>();
     private ArrayList<String> terms = new ArrayList<>();
     private int opCountInsert;
     private int aveCount;
+    public Boolean btn1Clicked = false;
+    public static Boolean btn2Clicked = false;
+
     public static void main(String[] args) {
         GenericsKbAVLApp App = new GenericsKbAVLApp();
-        App.run();
+        GUI GUI = new GUI();
+
+        GUI.start();
+        JButton btn1 = GUI.getButton1();
+        btn1.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                //loadQuery("Experiment_Testing_Values");
+                GUI.part1();
+                JButton btnBack = GUI.getBackButton();
+                btnBack.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        GUI.backButton();
+                    }
+                });
+            }
+        });
+
+        JButton btn2 = GUI.getButton2();
+        btn2.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                //loadQuery("Experiment_Testing_Values");
+                GUI.part2();
+                JButton btnBack = GUI.getBackButton();
+                btnBack.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        GUI.backButton();
+                    }
+                });
+            }
+        });
+
+        //App.runPart1();
     }
 
-    private void run(){
-        loadQuery();
+    private void runPart1(){
+        loadDataset(50000);
+        searchTerm();
+        System.out.println("Comparisions = " + tree.opCount);
+        System.out.println("Inserts = " + opCountInsert);
+        System.out.println("Average case for inserts: " + aveCount/5);
+    }
+
+    private void runPart2(){
         for(int i = 5; i < 50001; i *= 10){
             i--;
             loadDataset(i);
@@ -23,6 +67,7 @@ public class GenericsKbAVLApp {
         }
         System.out.println("Average case for inserts: " + aveCount/5);
     }
+
     private void loadDataset(int num) {
         try{
             opCountInsert = 1;
@@ -44,9 +89,9 @@ public class GenericsKbAVLApp {
         }
     }
 
-    private void loadQuery(){
+    private void loadQuery(String fileName){
         try {
-            BufferedReader file = new BufferedReader(new FileReader("GenericsKB-queries.txt"));
+            BufferedReader file = new BufferedReader(new FileReader(fileName));
             String line;
             while ((line = file.readLine()) != null){
                 terms.add(line);
