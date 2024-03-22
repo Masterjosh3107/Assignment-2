@@ -1,3 +1,0 @@
-make[1]: Entering directory '/home/josh/Assignments/Assignment-2'
-make[1]: Nothing to be done for 'output.txt'.
-make[1]: Leaving directory '/home/josh/Assignments/Assignment-2'
