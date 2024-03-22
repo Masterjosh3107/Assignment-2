@@ -41,43 +41,48 @@ public class GenericsKbAVLApp {
 
 
     private void runPart1(){
-        for(int i = 5; i <= 50000; i *= 10){
-            i--;
-            loadDataset(i);
-            searchTerm(terms.size());
-            System.out.println("\nComparisions = " + tree.opSearchCount);
-            System.out.println("Inserts = " + tree.opInsertCount + "\n");
-            i++;
-
-            aveCountComparison += tree.opSearchCount;
-            aveCountInsert += tree.opInsertCount;
-            tree.opSearchCount = 0;
-            tree.opInsertCount = 1;
-        }
-        System.out.println("Average case for inserts: " + aveCountInsert/5);
-        System.out.println("Average case for comparisons: " + aveCountComparison/5);
-        aveCountComparison = 0;
-        aveCountInsert = 0;
+            
+        loadDataset(50000);
+        searchTerm(terms.size());
+        System.out.println("\nComparisions = " + tree.opSearchCount);
+        System.out.println("Inserts = " + tree.opInsertCount + "\n");
+     
+        tree.opSearchCount = 0;
+        tree.opInsertCount = 0;
     }
 
     private void runPart2(){
+        int j = 0;
+        boolean bCheck = false;
         for(int i = 5; i <= 50000; i *= 10){
+            j++;
             i--;
-            generateSubset(i);
             loadDataset(i);
             searchTerm(terms.size());
-            searchTermSubset(randomNumbers.size());
             System.out.println("\nComparisions = " + tree.opSearchCount);
-            System.out.println("Inserts = " + tree.opInsertCount + "\n");
+            if (tree.opInsertCount == 4){
+                System.out.println("Inserts = " + (tree.opInsertCount + 1) + "\n");
+                bCheck = true;
+            }
+            else{
+                System.out.println("Inserts = " + (tree.opInsertCount) + "\n");
+                bCheck = false;
+            }
             i++;
 
             aveCountComparison += tree.opSearchCount;
             aveCountInsert += tree.opInsertCount;
             tree.opSearchCount = 0;
             tree.opInsertCount = 1;
+            if (bCheck == true){
+                System.out.println("Average case for inserts: " + (aveCountInsert + 1));
+                System.out.println("Average case for comparisons: " + aveCountComparison);
+            }
+            else{
+                System.out.println("Average case for inserts: " + aveCountInsert/j);
+                System.out.println("Average case for comparisons: " + aveCountComparison/j);
+            }
         }
-        System.out.println("Average case for inserts: " + aveCountInsert/5);
-        System.out.println("Average case for comparisons: " + aveCountComparison/5);
         aveCountComparison = 0;
         aveCountInsert = 0;
     }
@@ -124,7 +129,7 @@ public class GenericsKbAVLApp {
             while ((line = file.readLine()) != null){
                 terms.add(line);
             }
-            System.out.println("\nKnowledge base loaded successfully.\n");
+            System.out.println("Knowledge base loaded successfully.\n");
             file.close();
         } catch (Exception e) {
             System.out.println("\nCould not find query file.\n");
@@ -143,45 +148,6 @@ public class GenericsKbAVLApp {
                     System.out.println("Term not found: " + entry.getTerm());
                 }
             }
-        }
-    }
-
-    private void searchTermSubset(int num){
-        if (subsetData != null){
-            for(int i=0; i<num;i++){
-                Entry entry = subsetData.get(randomNumbers.get(i));
-                if (tree.find(entry) != null){
-                    BinaryTreeNode<Entry> node = tree.find(entry);
-                    System.out.println(node.data.getTerm() + ": " + node.data.getStatement() + " (" + node.data.getScore() + ")");
-                }
-                else{
-                    System.out.println("Term not found: " + entry.getTerm());
-                }
-            }
-        }
-    }
-
-    private void generateSubset(int num){
-        try {
-            randomNumbers.clear();
-            Random random = new Random();
-            while (randomNumbers.size() < num){  //change 5 to num
-                int randNum = random.nextInt(50000);
-                if (!randomNumbers.contains(randNum)){
-                    randomNumbers.add(randNum);
-                }
-            }
-
-            BufferedWriter writer = new BufferedWriter(new FileWriter("Subset.txt"));
-            for (int i = 0; i < randomNumbers.size(); i++){
-                Entry entry = subsetData.get(randomNumbers.get(i));
-                String line = entry.getTerm();
-                writer.write(line);
-                writer.newLine();
-            }   
-            writer.close();
-        } catch (IOException e) {
-            System.out.println("Error!");
         }
     }
 

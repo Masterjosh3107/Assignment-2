@@ -5,8 +5,8 @@
 
 public class AVLTree<dataType extends Comparable<? super dataType>> extends BinaryTree<dataType>
 {
-   public int opSearchCount = 1;
-   public int opInsertCount = 1;
+   public int opSearchCount = 0;
+   public int opInsertCount = 0;
    public int height ( BinaryTreeNode<dataType> node )
    {
       if (node != null)
