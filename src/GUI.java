@@ -101,6 +101,14 @@ public class GUI {
         btnBack2.addActionListener(e -> backButton());
     }
 
+    public void showMessage1(){
+        JOptionPane.showMessageDialog(framePart1, "Close program to see generated output, stored in output.txt or continue to Part 2");
+    }
+
+    public void showMessage2(){
+        JOptionPane.showMessageDialog(framePart1, "Close program to see generated output, stored in output.txt");
+    }
+
     public void backButton(){
         framePart1.setVisible(false);
         framePart2.setVisible(false);

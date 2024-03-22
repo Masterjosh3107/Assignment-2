@@ -23,6 +23,7 @@ public class GenericsKbAVLApp {
             public void actionPerformed(ActionEvent e){
                 loadQuery("Experiment_Testing_Values.txt");
                 App.runPart1();
+                GUI.showMessage1();
             }
         });
 
@@ -31,22 +32,10 @@ public class GenericsKbAVLApp {
             public void actionPerformed(ActionEvent e){
                 loadQuery("GenericsKB-queries.txt");
                 App.runPart2();
+                GUI.showMessage2();
             }
         });
     
-        JButton btnBack1 = GUI.getBackButton1();
-        btnBack1.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                System.out.println("Clicked Back 1");
-            }
-        });
-
-        JButton btnBack2 = GUI.getBackButton2();
-        btnBack2.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                System.out.println("Clicked Back 2");
-            }
-        });
     
     }
 
